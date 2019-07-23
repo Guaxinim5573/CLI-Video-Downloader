@@ -1,0 +1,21 @@
+{
+  "name": "videodown",
+  "version": "1.0.0",
+  "description": "YouTube Video Downloader In CLI",
+  "main": "./bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "videodown": "./bin/index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "inquirer": "^6.4.1",
+    "ora": "^3.4.0",
+    "ytdl-core": "^0.29.2"
+  }
+}
