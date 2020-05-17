@@ -10,7 +10,8 @@ const ora = require("ora")
 const inquirer = require("inquirer")
 
 async function handleError(e) {
-	console.log(chalk.red(e.message))
+	console.log("\n" + chalk.red(e.message))
+	process.exit()
 }
 
 async function ask() {
@@ -30,77 +31,77 @@ async function ask() {
 	return inquirer.prompt(q)
 }
 
-const download = async (url, title, format) => new Promise(async function(resolve, reject){
+const download = (url, title, format) => new Promise(async (r, rj) => {
 	try {
-		let options;
-		if(format === "mp4") options = {quality: "highest"}
-		else options = {}
-		var spin1 = ora("Downloading...").start()
-		var stream = await ytdl(url, options).pipe(fs.createWriteStream(title + ".mp4"))
-		stream.on("finish", async function() {
-			spin1.succeed("Downloaded!")
-			resolve()
+		const options = {quality: 'highest'};
+		const spin = ora("Downloading...").start()
+		const video = await ytdl(url, options)
+		const stream = video.pipe(fs.createWriteStream((format === "mp4" ? "" : "temp-") + title + ".mp4"))
+		video.on("progress", (chunk, downloaded, total) => {
+			const percent = downloaded / total
+			spin.text = "Downloading... " + `${(percent * 100).toFixed()}% ${(downloaded / 1024 / 1024).toFixed(2)}MB/${(total / 1024 / 1024).toFixed(2)}MB`
+		})
+		stream.once("finish", () => {
+			spin.succeed("Downloaded!")
+			r()
 		})
 	} catch(e) {
-		reject(e)
+		rj(e)
 	}
 })
 
-const format = async (title, start) => new Promise(async function(resolve, reject){
+const format = (title) => new Promise((r, rj) => {
 	try {
-		var spin2 = ora("Converting...").start()
-		var proc = new ffmpeg({source: title + ".mp4"})
+		const spin = ora("Converting...").start()
+		const proc = new ffmpeg({source: "temp-" + title + ".mp4"})
 		proc.setFfmpegPath("FFmpeg")
 		proc.withAudioCodec("libmp3lame")
 		.toFormat("mp3")
 		.output(title + ".mp3")
 		.run()
-		proc.on("end", function() {
-			spin2.succeed("Converted!")
-			var spin3 = ora("Deleting temp files...")
-			try {
-				fs.unlink(title + ".mp4", function(err){
-					if(err) return new Error(err)
-				})
-			} catch(e) {
-				reject(e)
-			} finally{
-				spin3.succeed("Deleted temp files!")
-				console.log(chalk.green(title) + " downloaded and converted in " + chalk.yellow(`${(Date.now() - start) / 1000}`) + " seconds")
-				resolve()
-			}
+		proc
+		.on("progress", progress => {
+			spin.text = "Converting... " + (progress.percent ? progress.percent.toFixed() + "%" : "")
+		})
+		.once("end", () => {
+			spin.succeed("Converted!")
+			const spin2 = ora("Deleting temp file...")
+			fs.unlink("temp-" + title + ".mp4", (err) => {
+				if(err) return rj(e)
+				spin2.succeed("Deleted temp file!")
+				r()
+			})
 		})
 	} catch(e) {
-		reject(e)
+		rj(e)
 	}
 })
 
-const getInfo = async (url) => new Promise(async function(resolve, reject){
+const getInfo = (url) => new Promise((r, rj) => {
 	try {
-		var title = ""
-		ytdl.getInfo(url, async function(err, info){
-			if(err) reject(err)
-			if(!info || info == undefined) title = "video-music"
-			else title = await info.title
-			resolve(title)
+		ytdl.getInfo(url, (err, info) => {
+			if(err) return rj(err)
+			r(info)
 		})
 	} catch(e) {
-		reject(e)
+		rj(e)
 	}
 })
 
 async function main() {
 	try {
-		var input = await ask()
+		const input = await ask()
 		const start = Date.now()
-		var url = input.url
-		var title = await getInfo(url)
+		const url = input.url
+		const spin = ora("Getting video info...").start()
+		const info = await getInfo(url).catch(e => {throw new Error(e.message)})
+		spin.succeed("Video found!")
+		const title = info ? info.title : "video-music"
+		console.log("Title: " + chalk.green(title))
+		console.log("Channel name: " + chalk.green(info.author.name))
 		await download(url, title)
-		if(input.format === "mp3"){
-			await format(title, start)
-		} else {
-			console.log(chalk.green(title) + " dowloaded in " + chalk.yellow(`${(Date.now() - start) / 1000}`) + " seconds")
-		}
+		if(input.format === "mp3") await format(title)
+		console.log(chalk.green(title) + " dowloaded in " + chalk.yellow(`${(Date.now() - start) / 1000}`) + " seconds")
 	} catch(e) {
 		handleError(e)
 	}

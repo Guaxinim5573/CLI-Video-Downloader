@@ -3,6 +3,16 @@
 YouTube Video Downloader running in prompt
 MP3 and MP4
 
+## Changelog
+
+- 1.1.0
+	- Video information in download
+	- Show download and convert progress
+	- Use new ytdl-core version (2.1.2)
+
+- 1.0.0
+	- Download mp3 and mp4
+
 ##   Dependencies
 
  1. [Inquirer](https://www.npmjs.com/package/inquirer)
@@ -30,4 +40,4 @@ MP3 and MP4
 
 ### Author
 
- - Guaxinim#4543 [Discord]
+ - Guaxinim#2753 [Discord]
