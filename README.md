@@ -5,12 +5,15 @@ MP3 and MP4
 
 ## Changelog
 
+- 1.1.1
+	- Remove some special characters from file name (Characters that can't be a file name)
+	- Remove `setFfmpegPath`, it will try auto detect FFmpeg
 - 1.1.0
 	- Video information in download
-	- Show download and convert progress
+	- Show download progress and convert progress
 	- Use new ytdl-core version (2.1.2)
 
-- 1.0.0
+- 1.0
 	- Download mp3 and mp4
 
 ##   Dependencies

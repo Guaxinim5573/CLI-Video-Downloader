@@ -54,7 +54,7 @@ const format = (title) => new Promise((r, rj) => {
 	try {
 		const spin = ora("Converting...").start()
 		const proc = new ffmpeg({source: "temp-" + title + ".mp4"})
-		proc.setFfmpegPath("FFmpeg")
+		//proc.setFfmpegPath("FFmpeg")
 		proc.withAudioCodec("libmp3lame")
 		.toFormat("mp3")
 		.output(title + ".mp3")
@@ -96,10 +96,10 @@ async function main() {
 		const spin = ora("Getting video info...").start()
 		const info = await getInfo(url).catch(e => {throw new Error(e.message)})
 		spin.succeed("Video found!")
-		const title = info ? info.title : "video-music"
+		const title = info ? info.title.replace(/\\|\/|\?|:|"|\*|<|>|\|/gm, "-") : "video-music"
 		console.log("Title: " + chalk.green(title))
 		console.log("Channel name: " + chalk.green(info.author.name))
-		await download(url, title)
+		await download(url, title, input.format)
 		if(input.format === "mp3") await format(title)
 		console.log(chalk.green(title) + " dowloaded in " + chalk.yellow(`${(Date.now() - start) / 1000}`) + " seconds")
 	} catch(e) {
