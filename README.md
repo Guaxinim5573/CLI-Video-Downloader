@@ -1,19 +1,6 @@
 ## CLI VIDEO DOWNLOADER
 
-YouTube Video Downloader running in prompt, download MP3 and MP4
-
-## Changelog
-
-- 1.1.1
-	- Remove some special characters from file name (Characters that can't be a file name)
-	- Remove `setFfmpegPath`, it will try auto detect FFmpeg
-- 1.1.0
-	- Video information in download
-	- Show download progress and convert progress
-	- Use new ytdl-core version (2.1.2)
-
-- 1.0
-	- Download mp3 and mp4
+YouTube Video Downloader in CLI, download MP3 and MP4.
 
 ##   Dependencies
 
@@ -26,22 +13,16 @@ YouTube Video Downloader running in prompt, download MP3 and MP4
 ## Start
 
  1. You need to have [Node.js](https://nodejs.org) and [FFmpeg](https://ffmpeg.org) installed in your computer.
-
- 2. Download the zip file or use `git clone https://github.com/Guaxinim5573/CLI-Video-Downloader.git` in your prompt.
- 3. Use `npm install` to install the dependencies.
-4. Use `npm link` to link the command in your prompt.
-5. And now, just use `videodown` in your console to download a video!
-
+ 2. Use `npm i -g git+https://github.com/Guaxinim5573/CLI-Video-Downloader` in command prompt to install the program
 ## Running
 
 1. Use `videodown` in your console
 2. Select the format (MP3 or MP4), use arrows keys to move the arrow and use enter to select the format.
 3. Input the video URL or video ID
 4. Wait...
-5. In the folder where the CMD is running, a video or music file will be there!
+5. In the folder where the command is running, a video or music file will be there!
 
 ![](https://cdn.discordapp.com/attachments/721811011509682206/722561139052904518/bbbbb.gif)
 
-### Author
-
- - Guaxinim#2753 [Discord]
+### License
+See [LICENSE](https://github.com/Guaxinim5573/CLI-Video-Downloader/blob/master/LICENSE) file
