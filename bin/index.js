@@ -22,7 +22,7 @@ function handleError(e) {
 	if(debug) {
 		console.log(e.stack || "no stack")
 	}
-	process.exit(1)
+	process.exit()
 }
 
 async function ask() {
@@ -69,4 +69,4 @@ async function main() {
 		handleError(e)
 	}
 }
-main().then(() => process.exit(0))
+main().then(() => process.exit())

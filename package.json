@@ -1,6 +1,6 @@
 {
   "name": "videodown",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "YouTube Video Downloader in CLI",
   "homepage": "https://github.com/Guaxinim5573/CLI-Video-Downloader",
   "main": "./bin/index.js",

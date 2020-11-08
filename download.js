@@ -10,7 +10,7 @@ module.exports = function(url, title) {
 			const stream = video.pipe(fs.createWriteStream(title + ".mp4"))
 			video.on("progress", (chunk, downloaded, total) => {
 				const percent = downloaded / total * 100
-				const bar = percent.toFixed(0) + "% - [" + ("█".repeat(percent / 5)) + (" ".repeat(20 - percent / 5)) + "]"
+				const bar = percent.toFixed(0) + "% - [" + ("█".repeat(percent / 5)) + (" ".repeat(20 - percent / 5)) + "] - " + (downloaded / 1024 / 1024).toFixed(2) + "MB / " + (total / 1024 / 1024).toFixed(2) + "MB"
 				spin.text = "Downloading...\n" + bar
 			})
 			stream.once("finish", () => {
