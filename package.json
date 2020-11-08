@@ -23,6 +23,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "inquirer": "^6.4.1",
     "ora": "^3.4.0",
-    "ytdl-core": "^4.0.3"
+    "ytdl-core": "^4.0.3",
+    "ytpl": "^1.0.1"
   }
 }

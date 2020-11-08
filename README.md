@@ -7,14 +7,18 @@ YouTube Video Downloader in CLI, download MP3 and MP4.
  1. [Inquirer](https://www.npmjs.com/package/inquirer)
  2. [Fluent FFmpeg](https://www.npmjs.com/package/fluent-ffmpeg)
  3. [Chalk](https://www.npmjs.com/package/chalk)
- 4. [YTDL Core](https://www.npmjs.com/package/ytdl-core)
+ 4. [ytdl core](https://github.com/fent/node-ytdl-core/)
  5. [Ora Spinner](https://www.npmjs.com/package/ora)
+ 6. [node-ytpl](https://github.com/timeforaninja/node-ytpl/)
 
 ## Start
 
  1. You need to have [Node.js](https://nodejs.org) and [FFmpeg](https://ffmpeg.org) installed in your computer.
  2. Use `npm i -g git+https://github.com/Guaxinim5573/CLI-Video-Downloader` in command prompt to install the program
+
 ## Running
+
+**We have playlist support!**
 
 1. Use `videodown` in your console
 2. Select the format (MP3 or MP4), use arrows keys to move the arrow and use enter to select the format.
